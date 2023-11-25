@@ -11,21 +11,12 @@ function App() {
   let [data, setData] = useState(null)
 
   useEffect(() => {
-    const fetchDataAsync = async () => {
-      if (searchTerm) {
-        try {
-          document.title = `${searchTerm} Music`;
-          console.log(await fetchData(searchTerm));
-          setData(await fetchData(searchTerm));
-        } catch (error) {
-          console.error("Error fetching data:", error);
-          setMessage("Error fetching data. Please try again.");
-        }
-      }
-    };
-  
-    fetchDataAsync();
-  }, [searchTerm]);
+    if (searchTerm) {
+      document.title=`${searchTerm} Music`
+      console.log(fetchData(searchTerm))
+      setData(fetchData(searchTerm))
+  }
+  }, [searchTerm])
 
   const handleSearch = (e, term) => {
     e.preventDefault()
@@ -33,17 +24,14 @@ function App() {
   }
 
   const renderGallery = () => {
-    if (data) {
+    if(data){
       return (
         <Suspense fallback={<Spinner />}>
           <Gallery data={data} />
         </Suspense>
-      );
-    } else {
-      return <div>{message}</div>;
+      )
     }
-  };
-  
+  }
 
   return (
     <div className="App">
